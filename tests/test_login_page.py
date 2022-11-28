@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-from page_objects.login_page import LoginPage
+from page_objects.home_page import LoginPage
 
 
 class TestLogin:
