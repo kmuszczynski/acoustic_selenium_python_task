@@ -1,8 +1,8 @@
 from selenium.common import TimeoutException
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class BasePage:
@@ -34,3 +34,12 @@ class BasePage:
             return wait.until(ec.visibility_of_element_located(locator))
         except TimeoutException:
             return False
+
+    def read_alert_text(self, time: int = 10) -> str:
+        wait = WebDriverWait(self._driver, time)
+        try:
+            wait.until(ec.alert_is_present())
+            return self._driver.switch_to.alert.text
+            # return Alert(self._driver).text
+        except TimeoutException:
+            return "no alert found :("
