@@ -4,7 +4,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from page_objects.base_page import BasePage
 
 
-class LoginPage(BasePage):
+class HomePage(BasePage):
     __url = "https://www.demoblaze.com/index.html"
     __login_button = (By.ID, "login2")
     __username_field = (By.ID, "loginusername")
