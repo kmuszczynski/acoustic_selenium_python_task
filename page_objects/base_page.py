@@ -43,3 +43,11 @@ class BasePage:
             # return Alert(self._driver).text
         except TimeoutException:
             return "no alert found :("
+
+    def accept_alert(self, time: int = 10):
+        wait = WebDriverWait(self._driver, time)
+        try:
+            wait.until(ec.alert_is_present())
+            self._driver.switch_to.alert.accept()
+        except TimeoutException:
+            print("This is illegal I think, to supress exceptions like that")

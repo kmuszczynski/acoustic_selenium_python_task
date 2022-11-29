@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 from page_objects.cart_page import CartPage
+from page_objects.home_page import HomePage
 
 
 class TestPurchase:
@@ -15,10 +16,13 @@ class TestPurchase:
         # go to home page
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         cart_page = CartPage(driver)
+        home_page = HomePage(driver)
 
         # login? maybe? not needed. optional? skip for now
 
         # click any phone
+        home_page.open()
+        expected_price = home_page.add_to_cart_and_return_price()
 
         # verify the page changed?
 
@@ -44,8 +48,13 @@ class TestPurchase:
         # click purchase
 
         # verify "Thank you for your purchase!" is displayed
+        assert cart_page.thank_you_displayed(), "Thank you message should be displayed, but isn't"
 
+        # verify total is equal to the expected price?
+        actual_price = cart_page.thank_you_prompt_text["Amount"]
+        assert actual_price == expected_price, f"Price/amount expected {expected_price} but got {actual_price} instead"
         # click "OK"
+        cart_page.click_ok()
 
         # uhh.... verify the cart is empty? maybe? skip for now
 
